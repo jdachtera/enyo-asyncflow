@@ -21,18 +21,19 @@ enyo.kind({
 
 enyo.kind({
 	name: "App",
-    fit: true,
     kind: 'FittableRows',
 	components:[
-
-        {kind: 'onyx.Toolbar', layoutKind: 'FittableColumnsLayout', noStretch: true, components: [
+        {kind: 'onyx.Toolbar', layoutKind: 'FittableColumnsLayout', style: 'height:64px', noStretch: true, components: [
             {kind: 'onyx.Input', value: 'enyo', onchange: 'loadImages'},
             {kind: 'onyx.Button', content: 'Load Images', ontap: 'loadImages'},
             {kind: 'onyx.ProgressBar', fit: true, showing: false}
         ]},
-        {kind: 'List', fit:true, onSetupItem: 'setupItem', components: [
-            {kind: 'Image'}
+        {kind: 'Scroller', fit:true, components: [
+            {name: 'list', kind: 'FlyweightRepeater', onSetupItem: 'setupItem', components: [
+                {kind: 'Image'}
+            ]}
         ]}
+
 	],
     imageUrls: [],
     loadImages: function() {
@@ -56,7 +57,7 @@ enyo.kind({
         ], {context: this})
         .response(this, function() {
             this.$.list.setCount(this.imageUrls.length);
-            this.$.list.reset();
+            this.$.list.render();
             this.$.progressBar.hide();
         })
         .progress(this, function(inSender, inProgress) {
