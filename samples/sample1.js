@@ -33,7 +33,6 @@ enyo.kind({
                 {kind: 'Image'}
             ]}
         ]}
-
 	],
     imageUrls: [],
     loadImages: function() {
@@ -51,11 +50,18 @@ enyo.kind({
                     this.imageUrls.push(urlprefix + ".jpg");
                 }
             }),
-            new enyo.AsyncMap(this.imageUrls, function(item, index) {
-                return new enyo.ImageLoader(item);
-            }, this, {generatorCallback: true, parallel: true})
+            new enyo.AsyncMap({
+                items: this.imageUrls,
+                generatorCallback: true,
+                context: this,
+                callback: function(item, index) {
+                    return new enyo.ImageLoader(item);
+                },
+                parallel: true
+            })
         ], {context: this})
-        .response(this, function() {
+        .response(this, function(inSender, inResponse) {
+			console.log(inResponse);
             this.$.list.setCount(this.imageUrls.length);
             this.$.list.render();
             this.$.progressBar.hide();
