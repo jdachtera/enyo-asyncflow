@@ -1,7 +1,14 @@
 Asynchronous Flow for Enyo
 ==========================
 
+This library implements asynchronous control flow for enyo. See the sample & api documentation for instructions.
+
+Here is a hosted example of what can be done:
+
+http://jdachtera.github.com/enyo-asyncflow/samples/sample.html
+
 Kinds:
+======
 
 enyo.AsyncFlow
 --------------
